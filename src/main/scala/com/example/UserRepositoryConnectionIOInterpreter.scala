@@ -2,13 +2,10 @@ package com.example
 
 import doobie._
 import doobie.implicits._
-import org.atnos.eff._
-import org.atnos.eff.addon.doobie.DoobieConnectionIOEffect._
 
-object UserRepositoryConnectionIOInterpreter
-    extends UserRepositoryEffInterpreter {
+trait UserRepositoryConnectionIOInterpreter {
 
-  private val connectionIOInterpreter: UserRepository[ConnectionIO] =
+  val connectionIOInterpreter: UserRepository[ConnectionIO] =
     new UserRepository[ConnectionIO] {
 
       override def find(id: Int): ConnectionIO[Option[User]] =
@@ -39,8 +36,7 @@ object UserRepositoryConnectionIOInterpreter
               |""".stripMargin.update.run
           .map(_ => ())
     }
-
-  implicit def effConnectionIOInterpreter[R: _connectionIO]
-      : UserRepository[Eff[R, *]] =
-    effInterpreter[R, ConnectionIO](connectionIOInterpreter)
 }
+
+object UserRepositoryConnectionIOInterpreter
+    extends UserRepositoryConnectionIOInterpreter

@@ -4,7 +4,7 @@ import org.atnos.eff._
 
 trait UserRepositoryEffInterpreter {
 
-  protected def effInterpreter[R, F[_]](
+  def effInterpreter[R, F[_]](
       interpreter: UserRepository[F]
   )(implicit evidence: F |= R): UserRepository[Eff[R, *]] =
     new UserRepository[Eff[R, *]] {
@@ -16,3 +16,5 @@ trait UserRepositoryEffInterpreter {
         Eff.send(interpreter.save(user))
     }
 }
+
+object UserRepositoryEffInterpreter extends UserRepositoryEffInterpreter

@@ -2,19 +2,19 @@ package com.example
 
 import scala.concurrent.ExecutionContext
 
-import cats.implicits._
 import cats.effect._
+import cats.implicits._
 import doobie._
 import doobie.implicits._
 import org.atnos.eff._
 import org.atnos.eff.all._
-import org.atnos.eff.syntax.all._
-import org.atnos.eff.syntax.addon.doobie._
 import org.atnos.eff.syntax.addon.cats.effect._
+import org.atnos.eff.syntax.addon.doobie._
+import org.atnos.eff.syntax.all._
 
 object Main extends App {
 
-  import UserRepositoryConnectionIOInterpreter._
+  import Syntax._
 
   implicit val cs: ContextShift[IO] = IO.contextShift(ExecutionContext.global)
 
